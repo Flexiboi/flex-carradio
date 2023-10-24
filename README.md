@@ -1,4 +1,4 @@
-**SOON RELEASE + SCREENSHOT + PREVIEW**
+**ALPHA V1 OUT**
 </br>
 </br>
 </br>
@@ -12,7 +12,7 @@ You can open the radio like normal GTA radio but it will open up the NEW UI and 
 </br>
 **HOW TO USE?**
 </br>
-You can seacrh and play song in the seacrh tab.
+You can seacrh and play song in the seacrh tab (Youtube is the best, streamlinks work too but cant (not yet) be saved).
 </br>
 When it started you can press **pause/stop** beneath it.
 </br>
