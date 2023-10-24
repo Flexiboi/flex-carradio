@@ -35,3 +35,6 @@ Play saved/preset songs by one click on the tumbnail.
 **DEPENDENCIES**
 </br>
 - QBCORE
+
+<code>PREVIEW</code>
+https://streamable.com/03k0pr
