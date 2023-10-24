@@ -1,0 +1,297 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#container {
+    overflow: hidden;
+    display: none;
+    z-index: -1;
+    background-image: url(../img/bg.png);
+    background-size: cover;
+    background-color: aquamarine;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 795px;
+    height: 475px;
+    padding: 15px;
+    padding-right: 60px;
+    border: solid 2px black;
+    border-radius: 5px;
+    filter: drop-shadow(0px 0px 5px #00000081);
+    font-family: sans-serif;
+    color: white;
+}
+
+#page1, #page2, #page3 {
+    display: none;
+}
+
+#menu {
+    width: 100px;
+    margin-top: 23px;
+    margin-left: 15px;
+    float: left;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+}
+
+#songs, #settings {
+    width: 570px;
+    margin-top: 35px;
+    float: right;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 50px;
+    justify-items: center;
+    justify-items: center;
+}
+
+#song1 , #song2, #song3, #song4, #song5, #song6, 
+#btn1, #btn2, #btn3, #btn4,
+#s1, #s2, #s3, #s4, #s5, #s6 {
+    transition: all .4s;
+    margin-left: 4px;
+    margin-top: 5px;
+    height: 80px;
+    width: 80px;
+    border-radius: 24%;
+    filter: drop-shadow(0px 0px 5px #00000081);
+    background-color: rgb(27, 27, 27);
+    border: solid 3px white;
+}
+
+#song1, #song2, #song3, #song4, #song5, #song6, 
+#s1, #s2, #s3, #s4, #s5, #s6 {
+    background-position: center;
+    background-size: 178%;
+    height: 160px;
+    width: 160px;
+}
+
+#song1:hover , #song2:hover, #song3:hover, #song4:hover, #song5:hover, #song6:hover, 
+#btn1:hover, #btn2:hover, #btn3:hover, #btn4:hover,
+#s1:hover, #s2:hover, #s3:hover, #s4:hover, #s5:hover, #s6:hover,
+#youtube #play:hover, #youtube #pause:hover, #youtube #stop:hover {
+    transform: scale(1.1);
+}
+
+#song1 {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+#song2 {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+#song3 {
+    grid-column: 3;
+    grid-row: 1;
+}
+
+#song4 {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+#song5 {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+#song6 {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+#btn1 {
+    background-image: url(../img/Settings.png);
+    background-size: contain;
+    grid-column: 1;
+    grid-row: 1;
+}
+
+#btn2 {
+    background-image: url(../img/Podcasts.png);
+    background-size: contain;
+    grid-column: 1;
+    grid-row: 2;
+}
+
+#btn3 {
+    background-image: url(../img/YouTube.png);
+    background-size: contain;
+    grid-column: 1;
+    grid-row: 3;
+}
+
+#btn4 {
+    background-image: url(../img/SoundUp.png);
+    background-size: contain;
+    grid-column: 1;
+    grid-row: 4;
+}
+
+#s1 {
+    background-image: url(../img/SoundDown.png);
+    background-size: contain;
+    grid-column: 1;
+    grid-row: 1;
+}
+
+#s2 {
+    background-image: url(../img/SoundUp.png);
+    background-size: contain;
+    grid-column: 2;
+    grid-row: 1;
+}
+
+#s3 {
+    background-image: url(../img/NoSound.png);
+    background-size: contain;
+    grid-column: 3;
+    grid-row: 1;
+}
+
+#s4 {
+    background-image: url(../img/Play.png);
+    background-size: contain;
+    grid-column: 1;
+    grid-row: 2;
+}
+
+#s5 {
+    background-image: url(../img/Pause.png);
+    background-size: contain;
+    grid-column: 2;
+    grid-row: 2;
+}
+
+#s6 {
+    background-image: url(../img/Stop.png);
+    background-size: contain;
+    grid-column: 3;
+    grid-row: 2;
+}
+
+#youtube {
+    overflow: hidden;
+    width: 570px;
+    float: right;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+    justify-items: center;
+    justify-items: center;
+}
+
+#youtube #title {
+    width: 570px;
+    height: 35px;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row: 3;
+    font-size: 30px;
+    font-weight: bold;
+    filter: drop-shadow(0px 0px 5px #00000081);
+
+    /* animation properties */
+    -moz-transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    -moz-animation: scrolltext 15s linear infinite;
+    -webkit-animation: scrolltext 15s linear infinite;
+    animation: scrolltext 15s linear infinite;
+}
+
+#youtube input {
+    width: 570px;
+    height: 35px;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row: 5;
+}
+
+textarea:focus, input:focus{
+    outline: none;
+}
+
+#youtube #play, #youtube #pause , #youtube #stop{
+    transition: all .4s;
+    width: 60px;
+    height: 60px;
+}
+
+#youtube #play {
+    background-image: url(../img/Play.png);
+    background-size: contain;
+    margin-left: -30px;
+    grid-column: 1;
+    grid-row: 6;
+}
+
+#youtube #pause {
+    background-image: url(../img/Pause.png);
+    background-size: contain;
+    margin-left: -30px;
+    grid-column: 2;
+    grid-row: 6;
+}
+
+#youtube #stop {
+    background-image: url(../img/Stop.png);
+    background-size: contain;
+    margin-left: -30px;
+    grid-column: 3;
+    grid-row: 6;
+}
+
+#dots {
+    z-index: 1;
+    width: 570px;
+    margin: 0 auto;
+    display: flex;
+    margin-left: 46%;
+    margin-top: 60%;
+}
+
+#dot1, #dot2, #dot3 {
+    transition: all .4s;
+    margin: 5px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}
+
+#dot1:hover, #dot2:hover, #dot3:hover {
+    transform: scale(1.1);
+}
+
+.noactive {
+    background-color: rgb(255, 255, 255);
+}
+
+.active {
+    background-color: rgb(198, 198, 198);
+}
+
+@keyframes scrolltext {
+    from {
+      -moz-transform: translateX(110%);
+      -webkit-transform: translateX(110%);
+      transform: translateX(110%);
+    }
+    to {
+        -moz-transform: translateX(-85%);
+        -webkit-transform: translateX(-85%);
+        transform: translateX(-85%);
+    }
+  }
