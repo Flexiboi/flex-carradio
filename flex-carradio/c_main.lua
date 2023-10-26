@@ -18,12 +18,14 @@ RegisterNetEvent('flex-carradio:client:open', function()
             local ped = PlayerPedId()
             if IsPedInAnyVehicle(ped, false) then
                 if GetPedInVehicleSeat(GetVehiclePedIsIn(ped), -1) == ped or GetPedInVehicleSeat(GetVehiclePedIsIn(ped), 0) == ped or Config.EveryoneCanOpen then
+                    local CurUrl = nil
+                    if Vehicles[GetVehiclePedIsIn(ped)] ~= nil then CurUrl = Vehicles[GetVehiclePedIsIn(ped)].Url else CurUrl = nil end
                     SendNUIMessage({
                         type = 'open',
                         channels = Config.DefaultChannels,
                         mutestate = MuteState,
                         vehicle = GetVehiclePedIsIn(ped),
-                        currentsong = Vehicles[GetVehiclePedIsIn(ped)].Url or nil,
+                        currentsong = CurUrl,
                     })
                     SetNuiFocus(true, true)
                 end
@@ -40,7 +42,7 @@ RegisterNUICallback('PlaySong', function(data, cb)
         Loop = data.loop,
         TimeStamp = 0
     }
-    xSound:PlayUrl(data.vehicle, data.url, data.volume, data.loop or false)
+    -- xSound:PlayUrl(data.vehicle, data.url, data.volume, data.loop or false)
     TriggerServerEvent('flex-carradio:server:syncradio', data.vehicle, data.url, data.volume, data.loop, 0)
 end)
 
@@ -122,7 +124,14 @@ RegisterNetEvent('flex-carradio:client:pauseresume', function(state, veh)
 end)
 
 RegisterNetEvent('flex-carradio:client:stop', function(veh)
-    xSound:Destroy(veh)
+    if xSound:soundExists(veh) then
+        xSound:Destroy(veh)
+        Vehicles[veh] = nil
+    end
+end)
+
+RegisterNetEvent('flex-carradio:client:settimestamp', function(veh, time)
+    Vehicles[veh].TimeStamp = time
 end)
 
 RegisterNetEvent('flex-carradio:client:volume', function(Vehicle, Volume)
@@ -142,18 +151,23 @@ CreateThread(function()
         local playerPos = GetEntityCoords(ped)
         for k, v in pairs(Vehicles) do
             if not DoesEntityExist(v.Id) then
-                table.remove(Vehicles, v.Id)
                 xSound:Destroy(v.Id)
+                Vehicles[v.Id] = nil
             end
-            if not xSound:soundExists(v.Id) then 
-                break InOutVehicleCheck = 1000
-            end
+            -- if not xSound:soundExists(v.Id) then 
+            --     break InOutVehicleCheck = 1000
+            -- end
             local vehPos = GetEntityCoords(v.Id)
             if #(vehPos - playerPos) <= Config.MaxCarDistance then
                 InOutVehicleCheck = 100
-                if xSound:isPlaying(v.Id) then
-                    local CurrentTimeStamp = xSound:getTimeStamp(v.Id)
-                    Vehicles[v.Id].TimeStamp = CurrentTimeStamp
+                --if xSound:isPlaying(v.Id) then
+                    if xSound:soundExists(v.Id) then
+                        local CurrentTimeStamp = xSound:getTimeStamp(v.Id)
+                        Vehicles[v.Id].TimeStamp = CurrentTimeStamp
+                        if GetPedInVehicleSeat(GetVehiclePedIsIn(ped), -1) == ped then
+                            TriggerServerEvent('flex-carradio:client:settimestamp', v.Id, CurrentTimeStamp)
+                        end
+                    end
                     if not IsPedInAnyVehicle(ped, false) then
                         local doors = 0
                         for i = 0, 5, 1 do
@@ -164,29 +178,31 @@ CreateThread(function()
                         if doors > 0 then
                             xSound:Distance(v.Id, Config.Default3DDistance * (doors) + (Config.Default3DDistance * v.Volume))
                         end
-                        if xSound:isPlaying(v.Id) then
+                        if xSound:soundExists(v.Id) then
                             if not xSound:isDynamic(v.Id) then
                                 xSound:PlayUrlPos(v.Id, v.Url, v.Volume, vehPos, v.Loop or false,{
                                 onPlayStart = function(event)
-                                    xSound:setTimeStamp(v.Id, CurrentTimeStamp)
+                                    xSound:setTimeStamp(v.Id, Vehicles[v.Id].TimeStamp )
                                     xSound:Distance(v.Id, Config.Default3DDistance)
                                 end,})
                                 xSound:setSoundDynamic(v.Id, true)
                             end
                         end
                     else
-                        if xSound:isDynamic(v.Id) then
-                            xSound:setSoundDynamic(v.Id, false)
+                        if xSound:soundExists(v.Id) then
+                            if xSound:isDynamic(v.Id) then
+                                xSound:setSoundDynamic(v.Id, false)
+                            end
                         end
-                        if not xSound:isPlaying(v.Id) then
+                        if not xSound:soundExists(v.Id) then
                             xSound:PlayUrl(v.Id, v.Url, v.Volume, v.Loop or false,{
                             onPlayStart = function(event)
-                                xSound:setTimeStamp(v.Id, CurrentTimeStamp)
+                                xSound:setTimeStamp(v.Id, Vehicles[v.Id].TimeStamp )
                                 xSound:Distance(v.Id, Config.Default3DDistance)
                             end,})
                         end
                     end
-                end
+                --end
             else
                 InOutVehicleCheck = 1000
             end

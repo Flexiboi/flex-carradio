@@ -43,3 +43,8 @@ RegisterNetEvent('flex-carradio:server:mutestate', function(vehicle, volume)
     Vehicles[vehicle].Volume = volume
     TriggerClientEvent('flex-carradio:client:mutestate', -1, vehicle, volume)
 end)
+
+RegisterNetEvent('flex-carradio:server:settimestamp', function(vehicle, time)
+    Vehicles[vehicle].TimeStamp = time
+    TriggerClientEvent('flex-carradio:client:settimestamp', -1, vehicle, time)
+end)
